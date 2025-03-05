@@ -1,0 +1,6 @@
+select o.orderid,o.customerid
+from 
+Customers c
+join
+Orders o
+on c.customerid=o.customerid;
