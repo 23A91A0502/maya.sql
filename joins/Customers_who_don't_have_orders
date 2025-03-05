@@ -1,0 +1,7 @@
+select distinct c.customername
+from
+Customers c
+left join
+Orders o
+on c.customerid=o.customerid
+where o.orderid is null;
