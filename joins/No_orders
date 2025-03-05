@@ -1,0 +1,10 @@
+SELECT 
+    c.CustomerName, 
+    CASE 
+        WHEN o.OrderID IS NULL THEN 'No Orders' 
+        ELSE o.OrderID 
+    END AS OrderID
+FROM 
+    Customers c
+LEFT JOIN 
+    Orders o ON c.CustomerID = o.CustomerID;
