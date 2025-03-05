@@ -1,0 +1,7 @@
+select c.customername,sum(o.amount)
+from
+Customers c
+join
+Orders o
+on c.customerid=o.customerid
+group by customername;
