@@ -1,224 +1,358 @@
--- PL / sql structure
+-- PL/SQL Introduction
+-- SQL --> Declarative Language
+-- In declarative languages we focus more
+-- on what to get rather than how to get
+-- Procedural Language Extension for their data
+-- base and they called it PL/SQL
+-- PL -> Procedural Language
+-- Declaration, assigment, conditional, loops
+-- functions
+-- PL/SQL struccture
 -- DECLARE (optional)
--- BEGIN ( mandatory)
+-- BEGIN (mandatory)
 -- EXCEPT (optional)
--- Delcare is used to declare variables
+-- DECLARE is used to declare variables
 -- used to initialize variable
--- begin section is used to write
+-- BEGIN section is used to write
 -- executable code
--- except exception handling
+-- EXCEPT exception handling
 SET SERVEROUTPUT ON;
--- PL/SQL block of code that prints hello world
-begin
-     dbms_output.put_line('Hello World');
-     dbms_output.put_line('I am Madhumitha');
-     
-end;
+-- PL/SQL block of code that prints Hello World
+-- printf(), print(), cout, System.out.println()
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello World');
+END;
 /
---Declaring variables in pl/sql
-declare
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello World');
+    DBMS_OUTPUT.PUT_LINE('I am Pavan');
+    DBMS_OUTPUT.PUT_LINE('From Technical Hub');
+END;
+/
+
+-- Declaring variables in PL/SQL
+DECLARE
     -- variable_name data type
-    num int;
-    name varchar(50);
-begin
-    --assignment operator is :=
-    -- substitution operator(&)
+    num INT;
+    name VARCHAR(50);
+BEGIN
+    -- Assignment operator is :=
+    num := 10;
+    name := 'Pavan';
+    DBMS_OUTPUT.PUT_LINE('Number is: ' || num);
+    DBMS_OUTPUT.PUT_LINE('Name is: ' || name);
+END;
+/
+
+
+-- Declaring variables in PL/SQL
+-- Oracle 19C EE
+-- Oracle 23AI
+DECLARE
+    -- variable_name data type
+    num INT;
+    name VARCHAR(50);
+BEGIN
+    -- Substitution Operator (&)
     num := &num;
-    name:='&name';
-    dbms_output.put_line('Number is : ' || num);
-    dbms_output.put_line('Name is : ' || name);
-end;
+    name := '&name';
+    DBMS_OUTPUT.PUT_LINE('Number is: ' || num);
+    DBMS_OUTPUT.PUT_LINE('Name is: ' || name);
+END;
+/
+
+-- Write a PL/SQL code to find out area and perimeter
+-- of a square
+DECLARE
+    side INT;
+    area INT;
+    perimeter INT;
+BEGIN
+    side := &side;
+    area := side * side;
+    perimeter := 4 * side;
+    DBMS_OUTPUT.PUT_LINE('Area is: ' || area);
+    DBMS_OUTPUT.PUT_LINE('Perimeter is: ' || perimeter);
+END;
+/
+-- PL/SQL code can seamlessly interact with SQL commands
+-- too
+-- Age calculator
+DECLARE
+    dob DATE;
+    age INT;
+BEGIN
+    dob := TO_DATE('&dob', 'DD-MM-YYYY');
+    age := TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(dob, 'YYYY');
+    DBMS_OUTPUT.PUT_LINE('You are ' || age || ' years old');
+END;
+/
+SELECT TO_CHAR(SYSDATE, 'YYYY') FROM dual;
+
+-- Conditional Statements
+-- Decision Making
+-- IF-THEN (Simple If)
+-- IF condition THEN code END IF;
+-- Voting program using PL/SQL
+DECLARE
+    age INT := 25;
+BEGIN
+    IF age > 18 THEN
+        DBMS_OUTPUT.PUT_LINE('You can vote');
+    END IF;
+END;
+/
+-- IF-THEN-ELSE
+-- Voting program using PL/SQL
+DECLARE
+    age INT := 15;
+BEGIN
+    IF age > 18 THEN
+        DBMS_OUTPUT.PUT_LINE('You can vote');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('You cannot vote');
+    END IF;
+END;
+/
+-- PL/SQL code to find the given number is even or odd
+DECLARE
+    num INT;
+BEGIN
+    num := &num;
+    IF MOD(num, 2) = 0 THEN
+        DBMS_OUTPUT.PUT_LINE(num || ' is even');
+    ELSE 
+        DBMS_OUTPUT.PUT_LINE(num || ' is odd');
+    END IF;
+END;
+/
+-- Nested If statements
+BEGIN
+    IF 10 > 2 THEN
+        IF 20 > 70 THEN
+            DBMS_OUTPUT.PUT_LINE('A');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('B');
+        END IF;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('C');
+    END IF;
+END;
+/
+-- Largest of 3 using nested if
+DECLARE
+    a INT := 10;
+    b INT := 20;
+    c INT := 30;
+    mot INT;
+BEGIN
+    IF a > b THEN
+        IF a > c THEN
+            mot := a;
+        ELSE
+            mot := c;
+        END IF;
+    ELSE    
+        IF b > c THEN
+            mot := b;
+        ELSE 
+            mot := c;
+        END IF;
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('Max of three is: ' || mot);
+END;
+/
+
+-- Largest of 3 using standard elsif
+-- else if, elif --> ELSIF
+DECLARE
+    a INT := 10;
+    b INT := 20;
+    c INT := 30;
+    mot INT;
+BEGIN
+    IF a > b AND a > c THEN
+        mot := a;
+    ELSIF b > c AND b > a THEN
+        mot := b;
+    ELSE
+        mot := c;
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('The max of three is : ' || mot);
+END;
 /
 
 
---write a pl/sql code to find area and perimeter of a square
-declare
-      a int;
-      
-      area int;
-      perimeter int;
-begin
-     a := &a;
-     
-     area := a*a;
-     perimeter :=4 * a;
-     dbms_output.put_line('Area of square is : ' || area);
-     dbms_output.put_line('Perimeter of square is : ' || perimeter);
-end;
-/
-
--- pl/sql can seemlessly interact with sql commands too
--- age calculator
-declare
-     dob date;
-     age int;
-begin
-     dob := to_date('&dob','DD-MM-YYYY');
-     age := to_char(sysdate,'YYYY') - to_char(dob,'YYYY');
-     dbms_output.put_line('You are ' || age || ' years old');
-     
-     
-end;
-/
---select to_char(sysdate,'YYYY') from dual;
--- conditional statements
---decision Making
--- if then (simple if)
--- if Condition then Code end if;
---voting program using pl/sql
-declare
-     age int := 15;
-begin
-     if age > 18 then
-          dbms_output.put_line('You can vote');
-    else
-      dbms_output.put_line('You cannot vote');
-    end if;
-end;
-/
---num is even or odd
-declare
-     num int := 6;
-begin
-     if  mod(num,2)=0 then
-          dbms_output.put_line('Number is even');
-    else 
-       dbms_output.put_line('Number is odd');
-    end if;
-    end;
-    /
--- if - then -elsif-then-else
-declare
-      a int:= 10;
-      b int := 20;
-      c int := 30;
-      ans int;
-begin
-   if a>b and a>c then
-      ans:=a;
-    elsif b>c and b>a then
-      ans:=b;
-    else
-      ans:=c;
-      end if;
-      dbms_output.put_line(ans);
-      end;
-      /
--- nested if's only to find max of three numbers
-declare
-      p int:= 10;
-      q int := 20;
-      r int := 30;
-      ans int;
-begin
-     if a > b then
-      if a > c then
-         ans:=a;
-      else
-         ans:=c;
-      end if;
-    else
-      if b > c then
-         ans:=b;
-     else
-       ans:=c;
-      end if;
-    end if;
-     end if;
-     dbms_output.put_line(ans);
-end;
-/
--- case(simple case)
---case (seached case)
-
--- iterative statements (loops)
--- while
--- used for condition based looping
---syntax of while
--- while condition
+-- Iterative Statements (Loops)
+-- while 
+-- Used for condition based looping
+-- Syntax of while
+-- WHILE condition LOOP
 -- code
--- end loop;
--- numbers from 1 to 10
-declare
+-- END LOOP;
+-- Simple program to print numbers from 1 to 10 using while loop
+DECLARE
     -- loop variable
-    i int:=1;
-    
-begin
-   while i <=10 loop
-   dbms_output.put_line('Number: ' || i);
-   i:=i+1;
-   end loop;
-end;
-/
---reverse numbers
-declare
-    j int :=10;
-    
-begin
-     while j>=1 loop
-     dbms_output.put_line('Number: ' || j);
-     j:=j-1;
-     end loop;
-end;
+    i INT := 1;
+BEGIN
+    WHILE i <= 10 LOOP
+        DBMS_OUTPUT.PUT_LINE('Number: ' || i);
+        i := i + 1;
+    END LOOP;
+END;
 /
 
---factors of a number
-declare
-     num int:=10;
-     i int := 1;
-     fc int :=0;
-begin
-     while i<=num loop
-     if mod(num,i)=0 then
-     fc:=fc+1;
-     dbms_output.put(i || ' ');
-     
-     end if;
-     i:=i+1;
-     end loop;
-     dbms_output.new_line();
-     dbms_output.put_line('factor count: ' || fc);
-     end;
-     /
-     
--- prime or not
+-- Printing from 10 to 1 using while loop
 
---dbms_output.put()
---buffer: hello all this is madhumitha from thub
-begin
-    dbms_output.put('Hello all ');
-    dbms_output.put('This is madhumitha ');
-    dbms_output.put('from thub');
-    dbms_output.new_line();
-    end;
-    /
-    
---for loop
--- for loop_var in start....Stop loop
+
+
+
+
+-- for (slightly different from C)
+-- Range based looping
+
+-- basic loop (mimics the way do-while works)
+DECLARE
+    -- loop variable
+    i INT := 10;
+BEGIN
+    WHILE i >= 1 LOOP
+        DBMS_OUTPUT.PUT_LINE('Number: ' || i);
+        i := i - 1;
+    END LOOP;
+END;
+/
+-- PL/SQL program to print factors of a given number
+DECLARE
+    num INT;
+    i INT := 1;
+BEGIN
+    num := &num;
+    WHILE i <= num LOOP
+        IF MOD(num, i) = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('Number: ' || i);
+        END IF;
+        i := i + 1;
+    END LOOP;
+END;
+/
+
+DECLARE
+    num INT;
+    i INT := 1;
+    fc INT := 0;            
+BEGIN
+    num := &num;
+    WHILE i <= num LOOP
+        IF MOD(num, i) = 0 THEN
+            fc := fc + 1;
+        END IF;
+        i := i + 1;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('Factor count is: ' || f);
+END;
+/
+
+DECLARE
+    num INT;
+    i INT := 1;
+BEGIN
+    num := &num;
+    WHILE i <= num LOOP
+        IF MOD(num, i) = 0 THEN
+            DBMS_OUTPUT.PUT_LINE(i);
+        END IF;
+        i := i + 1;
+    END LOOP;
+END;
+/
+
+-- DBMS_OUTPUT.PUT()
+-- buffer: Hello All This is Pavan From Technical Hub
+BEGIN
+    DBMS_OUTPUT.PUT('Hello All ');
+    DBMS_OUTPUT.PUT('This is Pavan ');
+    DBMS_OUTPUT.PUT('From Technical Hub ');
+    DBMS_OUTPUT.NEW_LINE(); -- Prints accumulated buffer
+END;
+/
+
+
+
+-- PL/SQL program to print factors of a given number
+DECLARE
+    num INT;
+    i INT := 1;
+BEGIN
+    num := &num;
+    WHILE i <= num LOOP
+        IF MOD(num, i) = 0 THEN
+            DBMS_OUTPUT.PUT(i || ' ');
+        END IF;
+        i := i + 1;
+    END LOOP;
+    DBMS_OUTPUT.NEW_LINE();
+END;
+/
+
+-- FOR LOOP
+-- FOR loop_var IN START..STOP LOOP
 -- code
--- end loop;
--- for loop code to print numbers from 1 to 10
-begin
-     for i in 1..10 loop
-        dbms_output.put_line('Num is: ' || i);
-    end loop;
-end;
+-- END LOOP;
+-- For loop code to print numbers from 1 to 10
+BEGIN
+    FOR i IN 1..10 LOOP
+        DBMS_OUTPUT.PUT_LINE('Number  is: ' || i);
+    END LOOP;
+END;
 /
---pattern 1 stars
-begin
-    for i in 1..5 loop
-       for j in 1..5 loop
-          dbms_output.put('* ');
-        end loop;
-        dbms_output.new_line();
-        end loop;
-        end;
-        /
--- in reverse in for loop
-begin
-    for i in reverse 1..5 loop
-        dbms_output.put_line('Num: ' || i);
-    end loop;
-end;
+
+BEGIN
+    FOR i IN 1..5 LOOP
+        FOR j IN 1..5 LOOP
+            DBMS_OUTPUT.PUT('* ');
+        END LOOP;
+        DBMS_OUTPUT.NEW_LINE();
+    END LOOP;
+END;
 /
+-- Using for loop print numbers in reverse
+-- Usage of IN REVERSE
+BEGIN
+    FOR i IN REVERSE 1..5 LOOP
+        DBMS_OUTPUT.PUT_LINE('Number: ' || i);
+    END LOOP;
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- IF-THEN-ELSIF-THEN-ELSE
+-- CASE (Simple CASE)
+-- CASE (Seached CASE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
