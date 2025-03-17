@@ -12,6 +12,16 @@ set serveroutput on;
 --employee table
 -- id,name,dob,salary,age
 --using trigger with the help of dob ,we can find age
+-------------------------------------------------------SYNTAX OF TRIGGERS-------------------------------------------------------
+--Create or replace trigger trg_name
+--before or after or instead of
+--insert | update | delete
+-- on table_name
+--[for each row] -> for only row level triggers
+--begin
+
+--end;
+-----------------------------------------------------------------------------------------------
 create table emp (
        id int primary key,
        name varchar(20),
